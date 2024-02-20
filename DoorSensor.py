@@ -1,11 +1,15 @@
 import json
 from Notifications import send_notification
+from logging_config import configure_logging, load_config  
+import logging
+
+configure_logging()
 
 # Door sensor entity ID
 DOOR_SENSOR = "binary_sensor.front_door_sensor_opening"
 
 async def subscribe_to_door_sensor(ws):
-    print("Subscribing to door sensors...")
+    logging.info("Subscribing to door sensors...")
     subscribe_command = {
         "id": 2,
         "type": "subscribe_trigger",
@@ -18,7 +22,7 @@ async def subscribe_to_door_sensor(ws):
     }
     await ws.send(json.dumps(subscribe_command))
     response = await ws.recv()
-    print("Subscribing successful.")
+    logging.info("Subscribing successful.")
 
 async def handle_door_sensor_events(res, config_data, armed_mode):
     # Implement logic here
