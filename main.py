@@ -7,10 +7,6 @@ from configparser import ConfigParser
 from Notifications import send_notification
 from time import sleep
 
-# Home Assistant API information
-HA_WS_URL = "ws://homeassistant.local:8123/api/websocket"
-HA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxMjcyNDM2NDRiZGU0NWNiYTYwYjYwMmI0ZWNhYzA3YiIsImlhdCI6MTcwODM2NTMzNSwiZXhwIjoyMDIzNzI1MzM1fQ.F_nj_z1qrBTtgdcdHIrKgGVurJi-nMbSWVEWCe1gP5U"
-
 # Door sensor entity ID
 DOOR_SENSOR = "binary_sensor.front_door_sensor_opening"
 
@@ -28,7 +24,7 @@ def load_config(file_path=None):
 
 async def authenticate(ws, config_data):
     await ws.recv()
-    await ws.send(json.dumps({"type": "auth", "access_token": HA_TOKEN}))
+    await ws.send(json.dumps({"type": "auth", "access_token": config_data['HA_TOKEN']}))
     response = await ws.recv()
     print(f"Authentication response: {response}")
     if json.loads(response)["type"] != "auth_ok":
@@ -62,7 +58,7 @@ async def handle_door_sensor_events(ws, config_data):
             send_notification(config_data, sensor + " has been opened")
 
 async def connect_to_ha_server(config_data):
-    async with websockets.connect(HA_WS_URL) as ws:
+    async with websockets.connect(config_data['HA_WS_URL']) as ws:
             authenticated = await authenticate(ws, config_data)
             if authenticated:
                 await subscribe_to_door_sensor(ws)
