@@ -4,11 +4,12 @@ from time import sleep
 
 async def main():
     config_data = load_config()
+    max_retries = 10
     i = 0
-    while(i < 10):
+    while(i < max_retries):
         try:
             await connect_to_ha_server(config_data)
-            i = 10
+            i = max_retries #Stops if the server exits successfully
         except Exception as e:
             send_notification(config_data, "Could not connect to the Home Assistant server")
             print("Could not connect to the Home Assistant server", e)

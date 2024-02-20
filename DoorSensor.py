@@ -5,6 +5,7 @@ from Notifications import send_notification
 DOOR_SENSOR = "binary_sensor.front_door_sensor_opening"
 
 async def subscribe_to_door_sensor(ws):
+    print("Subscribing to door sensors...")
     subscribe_command = {
         "id": 1,
         "type": "subscribe_trigger",
@@ -17,7 +18,7 @@ async def subscribe_to_door_sensor(ws):
     }
     await ws.send(json.dumps(subscribe_command))
     response = await ws.recv()
-    print(f"Subscription response: {response}")
+    print("Subscribing successful.")
 
 async def handle_door_sensor_events(ws, config_data, armed_mode):
     # Implement logic here
