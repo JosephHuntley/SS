@@ -1,6 +1,5 @@
 import requests
 
-#TODO: Uncomment code
 def send_notification(config_data, message="test", title="", priority=0):
     if(config_data['server'] == 'dev'):
         print(message)
