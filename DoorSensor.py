@@ -1,4 +1,5 @@
 import json
+from Notifications import send_notification
 
 # Door sensor entity ID
 DOOR_SENSOR = "binary_sensor.front_door_sensor_opening"
@@ -18,7 +19,7 @@ async def subscribe_to_door_sensor(ws):
     response = await ws.recv()
     print(f"Subscription response: {response}")
 
-async def handle_door_sensor_events(ws, config_data):
+async def handle_door_sensor_events(ws, config_data, armed_mode):
     # Implement logic here
     while True:
         res = await ws.recv()
