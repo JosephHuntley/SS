@@ -55,9 +55,11 @@ async def subscribe_to_door_sensor(ws):
 async def handle_door_sensor_events(ws, config_data):
     # Implement logic here
     while True:
-        response = await ws.recv()
-        if json.loads(response)["event"]["variables"]["trigger"]["entity_id"] == DOOR_SENSOR and armed_mode == "armed":
-            send_notification(config_data, DOOR_SENSOR + " has been opened")
+        res = await ws.recv()
+        # print(res)
+        if json.loads(res)["event"]["variables"]["trigger"]["entity_id"] == DOOR_SENSOR and armed_mode == "armed":
+            sensor = json.loads(res)["event"]["variables"]["trigger"]["to_state"]["attributes"]["friendly_name"]
+            send_notification(config_data, sensor + " has been opened")
 
 async def connect_to_ha_server(config_data):
     async with websockets.connect(HA_WS_URL) as ws:
