@@ -74,7 +74,7 @@ async def main():
         try:
             await connect_to_ha_server(config_data)
             i = 10
-        except as e:
+        except Exception as e:
             send_notification(config_data, "Could not connect to the Home Assistant server")
             print("Could not connect to the Home Assistant server", e)
             i += 1 
