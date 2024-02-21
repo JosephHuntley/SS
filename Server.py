@@ -6,8 +6,6 @@ import os
 import requests
 import websockets
 from DoorSensor import subscribe_to_door_sensor, handle_door_sensor_events
-import sys
-sys.path.append("..") 
 from logging_config import configure_logging, load_config
 
 # Load configuration
