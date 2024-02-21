@@ -5,8 +5,10 @@ from configparser import ConfigParser
 import os
 import requests
 import websockets
-from logging_config import configure_logging, load_config
 from DoorSensor import subscribe_to_door_sensor, handle_door_sensor_events
+import sys
+sys.path.append("..") 
+from logging_config import configure_logging, load_config
 
 # Load configuration
 config_data = load_config()

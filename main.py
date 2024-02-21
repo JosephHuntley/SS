@@ -3,6 +3,10 @@ from Notifications import send_notification
 from Server import connect_to_ha_server
 from time import sleep
 import logging
+
+# Import logging_config from parent folder
+import sys
+sys.path.append("..") 
 from logging_config import configure_logging, load_config  
 
 configure_logging()

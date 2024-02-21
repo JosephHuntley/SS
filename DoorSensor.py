@@ -1,7 +1,11 @@
 import json
 from Notifications import send_notification
-from logging_config import configure_logging, load_config  
 import logging
+
+# Import logging_config from parent folder
+import sys
+sys.path.append("..") 
+from logging_config import configure_logging, load_config  
 
 configure_logging()
 
