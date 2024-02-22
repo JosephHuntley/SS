@@ -2,6 +2,7 @@ import json
 from Notifications import send_notification
 import logging
 from logging_config import configure_logging, load_config  
+from alarm_control import ArmedMode
 
 configure_logging()
 
@@ -26,6 +27,6 @@ async def subscribe_to_door_sensor(ws):
 
 async def handle_door_sensor_events(res, config_data, armed_mode):
     # Implement logic here
-    if json.loads(res)["event"]["variables"]["trigger"]["entity_id"] == DOOR_SENSOR and armed_mode == "armed":
+    if json.loads(res)["event"]["variables"]["trigger"]["entity_id"] == DOOR_SENSOR and (armed_mode == ArmedMode.ARMED_AWAY | armed_mode == ArmedMode.ARMED_HOME):
         sensor = json.loads(res)["event"]["variables"]["trigger"]["to_state"]["attributes"]["friendly_name"]
         send_notification(config_data, sensor + " has been opened")
