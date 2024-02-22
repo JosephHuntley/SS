@@ -27,6 +27,9 @@ async def subscribe_to_door_sensor(ws):
 
 async def handle_door_sensor_events(res, config_data, armed_mode):
     # Implement logic here
-    if json.loads(res)["event"]["variables"]["trigger"]["entity_id"] == DOOR_SENSOR and (armed_mode == ArmedMode.ARMED_AWAY | armed_mode == ArmedMode.ARMED_HOME):
+    if ( json.loads(res)["event"]["variables"]["trigger"]["entity_id"] == DOOR_SENSOR and ( armed_mode.strip() == ArmedMode.ARMED_AWAY.value or armed_mode.strip() == ArmedMode.ARMED_HOME.value)):
         sensor = json.loads(res)["event"]["variables"]["trigger"]["to_state"]["attributes"]["friendly_name"]
         send_notification(config_data, sensor + " has been opened")
+
+
+    

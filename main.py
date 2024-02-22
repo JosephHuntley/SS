@@ -13,15 +13,17 @@ async def main():
     i = 0
     while(i < max_retries):
         try:
+            logging.info(f"Retry: {i}")
             await connect_to_ha_server(config_data)
-            i = max_retries #Stops if the server exits successfully
+            i = 0
+            logging.info("Waiting to reconnect..")
+            sleep(60)
         except Exception as e:
-            send_notification(config_data, "Could not connect to the Home Assistant server")
-            logging.error("Could not connect to the Home Assistant server: %s", e)
+            if(i >= 5):
+                send_notification(config_data, "Could not connect to the Home Assistant server")
+            logging.error(f"Could not connect to the Home Assistant server: {e}. Retry: {i}")
             i += 1 
             sleep(60)
-        
-
+    logging.info("Shutting Down....")
 if __name__ == "__main__":
-    configure_logging()
     asyncio.run(main())
