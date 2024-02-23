@@ -5,7 +5,7 @@ import websockets
 from door_sensor import subscribe_to_door_sensor, handle_door_sensor_events
 from logging_config import configure_logging, load_config
 from alarm_control import subscribe_to_armed_mode, handle_armed_mode_change, get_armed_mode
-import sleep
+from time import sleep
 
 # Load configuration
 config_data = load_config()
@@ -45,6 +45,7 @@ async def connect_to_ha_server(config_data):
 
                 while True:
                     res = await ws.recv()
+
                     id = json.loads(res)["id"]
 
                     if id == 1:
