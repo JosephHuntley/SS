@@ -29,6 +29,6 @@ async def handle_door_sensor_events(res, config_data, armed_mode):
     # Implement logic here
     if armed_mode.strip() in (ArmedMode.ARMED_AWAY.value, ArmedMode.ARMED_HOME.value):
         sensor = json.loads(res)["event"]["variables"]["trigger"]["to_state"]["attributes"]["friendly_name"]
-        send_notification(config_data, sensor + " has been opened")
+        send_notification(config_data, sensor + " has been opened", title="Sensor Opened", priority=2 if armed_mode == ArmedMode.ARMED_AWAY.value else 0)
 
     

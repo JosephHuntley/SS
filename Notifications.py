@@ -19,12 +19,13 @@ def send_notification(config_data, message="test", title="", priority=0):
             'user': user,
             'message': message,
             'title':title,
-            priority:priority
+            'priority':priority
         }
         headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
         }
-
+        
         res = requests.request("POST", url, headers=headers, data=payload)
+        logging.info(res.text)
         return res
 
